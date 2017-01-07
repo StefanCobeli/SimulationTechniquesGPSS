@@ -1,0 +1,46 @@
+;Declararile Histogramelor
+HRevizie QTABLE CRevizie,10,10,20
+HScurta QTABLE CScurta,10,10,20
+HLunga QTABLE CLunga,10,10,20
+HGen QTABLE CGen,10,10,20
+
+;Revizie
+GENERATE 2400,480,,,1
+QUEUE CGen
+QUEUE CRevizie
+PREEMPT Angajat,PR
+DEPART CRevizie
+DEPART CGen
+ADVANCE 600,60
+RETURN Angajat
+TERMINATE
+
+;ScurtaDurata
+GENERATE 90,10,,,3
+QUEUE CGen
+QUEUE CScurta
+PREEMPT Angajat,PR
+DEPART CScurta
+DEPART CGen
+ADVANCE 15,5
+RETURN Angajat
+TERMINATE
+
+
+;LungaDurata 
+GENERATE 300,60,,,2
+QUEUE CGen
+QUEUE CLunga
+PREEMPT Angajat,PR
+DEPART CLunga
+DEPART CGen
+ADVANCE 120,30
+RETURN Angajat
+TERMINATE
+
+;Contor zile. Noaptea nu lucreaza. 16h coada sta blocata.
+GENERATE 1zi,,,,4
+PREEMPT Angajat
+ADVANCE 16h
+RETURN Angajat
+TERMINATE 1

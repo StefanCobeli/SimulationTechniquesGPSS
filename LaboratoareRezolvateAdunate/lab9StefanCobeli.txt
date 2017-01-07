@@ -1,0 +1,74 @@
+;Lab9GPSS StefanCobeli Are ceva gresit
+
+Lab9 GPSS
+
+Hist TABLE M1,100,100,20
+GENERATE (EXPONENTIAL (1, 0, 300))
+
+SPLIT 2,Prelucrare23Initial,1
+QUEUE Coada1; Pentru a aduna informatii despre coada
+SEIZE Masina1
+DEPART Coada1
+ADVANCE 200,100
+RELEASE Masina1
+
+Asamblare GATHER 3
+ADVANCE 60
+TEST E 1,p1,Prelucrare23
+SEIZE Masina11
+ADVANCE 100,20
+RELEASE Masina11
+
+;Defapt ar trebui sa se numeasca AsamblareFinala, nu Dezasamblare
+Dezasamblare GATHER 3
+ADVANCE 150,30
+ASSEMBLE 3; Pentru ca sa execute doar o componenta terminate, nu toate 3.
+TABULATE Hist
+TERMINATE 1
+;gata cu componenta 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;Comportament componenta2
+Prelucrare23Initial TEST E 2,p1,Prelucrare3Initial
+QUEUE Coada2
+SEIZE Masina2
+DEPART Coada2
+ADVANCE 80,20
+RELEASE Masina2
+;componenta2(ccc2) si componenta3(ccc3) se asteapta
+ccc2 MATCH ccc3
+QUEUE Coada2
+SEIZE Masina2
+DEPART Coada2
+ADVANCE 50,10
+RELEASE Masina2
+TRANSFER ,Asamblare
+
+Prelucrare23 TEST E 2,p1,Prelucrare3
+SEIZE Masina12
+ADVANCE 120,30
+RELEASE Masina12
+TRANSFER ,Dezasamblare
+;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Comportament componenta 3
+Prelucrare3Initial QUEUE Coada3
+SEIZE Masina3
+DEPART Coada3
+ADVANCE 150,30
+RELEASE Masina3
+;componenta3 (ccc3) si 2 (ccc2) se asteapta
+ccc3 MATCH ccc2
+SEIZE Masina3
+ADVANCE 50,10
+RELEASE Masina3
+TRANSFER ,Asamblare
+
+Prelucrare3 SEIZE Masina13
+ADVANCE 120,30
+RELEASE Masina13
+TRANSFER ,Dezasamblare
+;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,0 +1,28 @@
+;Rezolvare Lab3 GPSS Verificata
+
+Depozit STORAGE 2000
+Diferenta VARIABLE 1000-S$Depozit
+Cerere VARIABLE RN1@24+40
+Histograma TABLE S$Depozit,100,100,20
+
+;Depunere
+GENERATE 5
+TEST L S$Depozit,800,Term
+ASSIGN Depunere,V$Diferenta
+ENTER Depozit,P$Depunere
+ADVANCE 5
+Term TERMINATE
+
+
+;Scoatere
+GENERATE 1
+ASSIGN Scoatere,V$Cerere
+TEST G S$Depozit,P$Scoatere,Term2 
+LEAVE Depozit,P$Scoatere
+TABULATE Histograma
+Term2 TERMINATE 1
+
+
+GENERATE ,,,1
+ENTER Depozit,1000
+TERMINATE
